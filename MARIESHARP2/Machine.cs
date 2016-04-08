@@ -74,6 +74,7 @@ namespace MARIESHARP2
             {
                 AC = IR = MAR = MBR = PC = 0; OUTPUT = String.Empty; //reset registers
                 MemoryList = (string[])CompiledMemory.Clone(); //reset memory to initial state
+                myState = State.Running;
                 onReset();
             }
         }

@@ -25,3 +25,12 @@ C:\Users\KIAN\Google Drive\VS\MARIESHARP2\MARIESHARP2\obj\Debug\MARIESHARP2.cspr
 C:\Users\KIAN\Google Drive\VS\MARIESHARP2\MARIESHARP2\obj\Debug\MARIESHARP2.Form1.resources
 C:\Users\KIAN\Google Drive\VS\MARIESHARP2\MARIESHARP2\obj\Debug\MARIESHARP2.Properties.Resources.resources
 C:\Users\KIAN\Google Drive\VS\MARIESHARP2\MARIESHARP2\obj\Debug\MARIESHARP2.csproj.GenerateResource.Cache
+C:\Users\KIAN\Documents\GitHub\MARIE-SHARP\MARIESHARP2\bin\Debug\MARIESHARP2.exe.config
+C:\Users\KIAN\Documents\GitHub\MARIE-SHARP\MARIESHARP2\obj\Debug\MARIESHARP2.exe
+C:\Users\KIAN\Documents\GitHub\MARIE-SHARP\MARIESHARP2\obj\Debug\MARIESHARP2.pdb
+C:\Users\KIAN\Documents\GitHub\MARIE-SHARP\MARIESHARP2\bin\Debug\MARIESHARP2.exe
+C:\Users\KIAN\Documents\GitHub\MARIE-SHARP\MARIESHARP2\bin\Debug\MARIESHARP2.pdb
+C:\Users\KIAN\Documents\GitHub\MARIE-SHARP\MARIESHARP2\obj\Debug\MARIESHARP2.csprojResolveAssemblyReference.cache
+C:\Users\KIAN\Documents\GitHub\MARIE-SHARP\MARIESHARP2\obj\Debug\MARIESHARP2.Form1.resources
+C:\Users\KIAN\Documents\GitHub\MARIE-SHARP\MARIESHARP2\obj\Debug\MARIESHARP2.Properties.Resources.resources
+C:\Users\KIAN\Documents\GitHub\MARIE-SHARP\MARIESHARP2\obj\Debug\MARIESHARP2.csproj.GenerateResource.Cache
