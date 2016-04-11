@@ -95,7 +95,7 @@
             this.tbox_code.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tbox_code.Location = new System.Drawing.Point(18, 13);
             this.tbox_code.Name = "tbox_code";
-            this.tbox_code.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
+            this.tbox_code.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
             this.tbox_code.Size = new System.Drawing.Size(386, 447);
             this.tbox_code.TabIndex = 1;
             this.tbox_code.Text = "";

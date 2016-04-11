@@ -56,10 +56,6 @@ namespace MARIESHARP2
         }
 
 
-        private void Tick(object sender, EventArgs e)
-        {
-            btn_step_Click(this, EventArgs.Empty);
-        }
         private void nud_delay_ValueChanged(object sender, EventArgs e)
         {
             Clock.Interval = (int)nud_delay.Value;
@@ -112,7 +108,7 @@ namespace MARIESHARP2
             tbox_code.Text = tbox_code.Text.ToString();
             int currentline = Machine.getLineNum();
 
-            tbox_code.Select(tbox_code.GetFirstCharIndexFromLine(currentline) + 1, tbox_code.Lines[currentline].Length);
+            tbox_code.Select(tbox_code.GetFirstCharIndexFromLine(currentline) + 1, tbox_code.Lines[currentline].Length - 1);
             tbox_code.SelectionBackColor = Color.LightGreen;
             tbox_code.DeselectAll();
         }
@@ -123,6 +119,15 @@ namespace MARIESHARP2
             lbl_mar.Text = Machine.MAR.ToString("X").PadLeft(3, '0');
             lbl_mbr.Text = Machine.MBR.ToString("X").PadLeft(4, '0');
             lbl_pc.Text = Machine.PC.ToString("X").PadLeft(3, '0');
+        }
+
+
+        public void Tick(object sender, EventArgs e)
+        {
+            if (Machine.myState == Machine.State.Halted || Machine.myState == Machine.State.InputPending) { return; }
+            UpdateSelection();
+
+            Machine.Execute(string.Empty);
         }
 
 
@@ -159,12 +164,8 @@ namespace MARIESHARP2
 
         private void btn_step_Click(object sender, EventArgs e)
         {
-            if (Machine.myState == Machine.State.Halted || Machine.myState == Machine.State.InputPending) { return; }
-
-            UpdateSelection();
-
-            Machine.Execute(string.Empty);
-            if (Machine.myState == Machine.State.Halted) { Clock.Stop(); }
+            Clock.Stop();
+            Tick(this, EventArgs.Empty);
         }
 
         private void btn_restart_Click(object sender, EventArgs e)

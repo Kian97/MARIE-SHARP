@@ -26,7 +26,6 @@ namespace MARIESHARP2
         public static State myState = State.Halted; public enum State { Running, Halted, InputPending }; 
 
         private enum OPCODES { JNS, LOAD, STORE, ADD, SUBT, INPUT, OUTPUT, HALT, SKIPCOND, JUMP, CLEAR, ADDI, JUMPI, LOADI, STOREI }; //Opcodes       
-        private static int[] noOperands = new int[] { 10, 9, 8, 5, 7, 6};
 
 
         private static List<int> blanklines = new List<int>();
@@ -142,13 +141,27 @@ namespace MARIESHARP2
             CompiledMemory = MemoryList;
         }
 
+
+        public static void MicroLoad(int operand)
+        {
+            MAR = operand;
+            MBR = HexToDec(MemoryList[operand]);
+        }
+        private static void MicroStore(int operand)
+        {
+            MAR = operand;
+            MBR = AC;
+            WriteMemory(MAR, DecToHex(MBR, 4));
+        }
+
         public static void Execute(string input) //Excute instruction
         {
             string str = MemoryList[PC]; //get memory value from PC address
 
+            MAR = PC; IR = HexToDec(MemoryList[MAR]);
+
             int opcode = HexToDec(str[0].ToString());
             int operand = HexToDec(str.Substring(1, 3));
-            IR = HexToDec(str);
 
             if (opcode == (int)OPCODES.INPUT) //special handling of input opcode
             {
@@ -161,30 +174,26 @@ namespace MARIESHARP2
                 { onRequestInput(); Machine.myState = State.InputPending; return; } 
             }
 
-            if (Array.IndexOf(noOperands, opcode) == -1) //FETCH
-            {
-                MAR = operand;
-                MBR = HexToDec(MemoryList[operand]);
-            }
-            else { MAR = PC; } //NO FETCH REQUIRED
-
-
             PC++;
+
             //DECODE + EXCUTE
             switch(opcode)
             {
                 case((int)OPCODES.LOAD):
                     {
+                        MicroLoad(operand);
                         AC = MBR;
                         break;
                     }
                 case ((int)OPCODES.SUBT):
                     {
+                        MicroLoad(operand);
                         AC -= MBR;
                         break;
                     }
                 case((int)OPCODES.ADD):
                     {
+                        MicroLoad(operand);
                         AC += MBR;
                         break;
                     }
@@ -216,7 +225,9 @@ namespace MARIESHARP2
                     }
                 case((int)OPCODES.STORE):
                     {
-                        WriteMemory(operand, DecToHex(AC, 4));
+                        MAR = operand;
+                        MBR = AC;
+                        WriteMemory(MAR, DecToHex(MBR, 4));
                         break;
                     }
                 case((int)OPCODES.INPUT):
@@ -224,34 +235,40 @@ namespace MARIESHARP2
                         AC = HexToDec(input);
                         break;
                     }
-                case((int)OPCODES.STOREI): 
+                case ((int)OPCODES.STOREI):
                     {
-                        int IAddress = HexToDec(MemoryList[MAR]);
-                        WriteMemory(IAddress, DecToHex(AC, 4));
+                        MicroLoad(operand);
+                        MicroStore(MBR);
+                        WriteMemory(MAR, DecToHex(AC, 4));
                         break;
                     }
                 case ((int)OPCODES.LOADI):
                     {
-                        int IAddress = HexToDec(MemoryList[MAR]);
-                        AC = HexToDec(MemoryList[IAddress]);
+                        MicroLoad(operand);
+                        MicroLoad(MBR);
+                        AC = MBR;
                         break;
                     }
                 case ((int)OPCODES.JUMPI):
                     {
+                        MAR = operand;
                         int IAddress = HexToDec(MemoryList[MAR]);
                         PC = IAddress;
                         break;
                     }
                 case ((int)OPCODES.JNS):
                     {
-                        WriteMemory(MAR, DecToHex(PC, 4));
+                        MAR = operand;
+                        MBR = PC;
+                        WriteMemory(MAR, DecToHex(MBR, 4));
                         PC = MAR + 1;
                         break;
                     }
                 case ((int)OPCODES.ADDI): 
                     {
-                        int IAddress = HexToDec(MemoryList[MAR]);
-                        AC += HexToDec(MemoryList[IAddress]);
+                        MicroLoad(operand);
+                        MAR = MBR;
+                        AC += HexToDec(MemoryList[MAR]);
                         break;
                     }
             }
